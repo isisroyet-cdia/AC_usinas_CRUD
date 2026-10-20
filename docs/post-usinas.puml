@@ -1,0 +1,19 @@
+@startuml POST /v1/usinas
+actor Cliente
+participant "UsinaController" as Controller
+participant "UsinaService" as Service
+participant "UsinaRepository" as Repository
+
+Cliente -> Controller: POST /v1/usinas (UsinaCreate)
+Controller -> Controller: Validacao Pydantic (UsinaCreate)
+alt dados invalidos
+    Controller --> Cliente: 422 ERRO_DE_VALIDACAO
+else dados validos
+    Controller -> Service: criar(dados)
+    Service -> Repository: criar(dados)
+    Repository -> Repository: gera id e data_ativacao
+    Repository --> Service: Usina
+    Service --> Controller: Usina
+    Controller --> Cliente: 201 Created (Usina)
+end
+@enduml
