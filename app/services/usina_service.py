@@ -1,16 +1,8 @@
-"""
-Camada de Servico, UsinaService.
-"""
 from app.domain.usina import StatusUsina, Usina, UsinaCreate, UsinaUpdate
 from app.repositories.usina_repository import UsinaRepository, usina_repository
 
 
 class ErroDeNegocio(Exception):
-    """
-    Erro de negocio com formato padronizado (Aula 10):
-    code, message e status.
-    """
-
     def __init__(self, code: str, message: str, status: int) -> None:
         self.code = code
         self.message = message
@@ -69,5 +61,4 @@ class UsinaService:
             )
 
 
-# Uma unica instancia compartilhada por toda a aplicacao.
 usina_service = UsinaService(usina_repository)

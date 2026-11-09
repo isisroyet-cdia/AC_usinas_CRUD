@@ -1,9 +1,3 @@
-"""
-Popula o banco com dados de exemplo da Bulbe Energia.
-Uso:  python -m app.db.seed
-Rode depois de "alembic upgrade head".
-"""
-
 from app.domain.usina import StatusUsina, UsinaCreate
 from app.domain.usuario import UsuarioCreate
 from app.repositories.usina_repository import usina_repository

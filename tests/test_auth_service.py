@@ -1,7 +1,3 @@
-"""
-Testes unitarios do AuthService.
-"""
-
 import pytest
 
 from app.domain.usuario import UsuarioCreate

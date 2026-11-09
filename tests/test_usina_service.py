@@ -1,12 +1,3 @@
-"""
-Testes unitarios do UsinaService.
-
-Duas estrategias:
-1. Repositorio em memoria NOVO para cada teste (isolamento simples).
-2. Mock do repositorio, para testar o Service sem depender de nenhuma
-   implementacao de persistencia.
-"""
-
 from unittest.mock import Mock
 
 import pytest
@@ -91,5 +82,4 @@ def test_service_com_mock_do_repositorio():
     with pytest.raises(ErroDeNegocio):
         service.buscar_por_id(7)
 
-    # Confere que o Service consultou o repositorio com o id certo.
     repositorio_falso.buscar_por_id.assert_called_once_with(7)

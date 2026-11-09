@@ -1,7 +1,3 @@
-"""
-Testes unitarios do AssinaturaService, com repositorios em memoria.
-"""
-
 import pytest
 
 from app.domain.assinatura import AssinaturaCreate

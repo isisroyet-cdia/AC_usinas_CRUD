@@ -1,7 +1,3 @@
-"""
-Camada de Dominio, entidade Assinatura.
-"""
-
 from pydantic import BaseModel, Field
 
 
@@ -13,8 +9,6 @@ class AssinaturaCreate(BaseModel):
 
 
 class Assinatura(AssinaturaCreate):
-    """Representacao completa de uma assinatura, como a API devolve."""
-
     id: int
 
     class Config:

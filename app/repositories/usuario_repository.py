@@ -1,8 +1,3 @@
-"""
-Camada de Persistencia, repositorios de Usuario.
-Mesmo padrao de Usina: contrato, versao em memoria e versao SQL.
-"""
-
 from typing import Protocol
 
 from sqlalchemy import select

@@ -1,9 +1,3 @@
-"""
-Testes da API pelo HTTP, usando o TestClient do FastAPI.
-Verificam que as rotas de escrita estao protegidas pelo JWT.
-"""
-
-
 def test_listar_usinas_e_publico(client):
     resposta = client.get("/v1/usinas")
     assert resposta.status_code == 200

@@ -1,7 +1,3 @@
-"""
-Camada de Persistencia, repositorios de Assinatura.
-"""
-
 from typing import Protocol
 
 from sqlalchemy import select

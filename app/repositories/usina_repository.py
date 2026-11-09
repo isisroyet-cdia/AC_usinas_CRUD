@@ -1,13 +1,3 @@
-"""
-Camada de Persistencia, repositorios de Usina.
-
-- UsinaRepository: o CONTRATO (interface). Diz quais metodos existem.
-- InMemoryUsinaRepository: a versao em dicionario, usada nos testes unitarios.
-- SqlUsinaRepository: a versao com banco de dados, usada pela API.
-
-O UsinaService so conhece o contrato. Por isso ele nao muda.
-"""
-
 from datetime import date
 from typing import Protocol
 
@@ -28,8 +18,6 @@ class UsinaRepository(Protocol):
 
 
 class InMemoryUsinaRepository:
-    """O mesmo repositorio do handson de CRUD, apenas renomeado."""
-
     def __init__(self) -> None:
         self._usinas: dict[int, Usina] = {}
         self._proximo_id: int = 1
@@ -64,8 +52,6 @@ class InMemoryUsinaRepository:
 
 
 class SqlUsinaRepository:
-    """Mesmos metodos, agora lendo e gravando no banco com SQLAlchemy."""
-
     def __init__(self, session_factory: sessionmaker[Session]) -> None:
         self._session_factory = session_factory
 
@@ -81,11 +67,10 @@ class SqlUsinaRepository:
 
     def criar(self, dados: UsinaCreate) -> Usina:
         with self._session_factory() as session:
-            # mode="json" converte o enum StatusUsina no texto "ativa"
             modelo = UsinaModel(**dados.model_dump(mode="json"), data_ativacao=date.today())
             session.add(modelo)
             session.commit()
-            session.refresh(modelo)  # traz o id gerado pelo banco
+            session.refresh(modelo)
             return Usina.model_validate(modelo)
 
     def atualizar(self, usina_id: int, dados: UsinaUpdate) -> Usina | None:
@@ -109,5 +94,4 @@ class SqlUsinaRepository:
             return True
 
 
-# A instancia usada pela aplicacao agora fala com o banco.
 usina_repository: UsinaRepository = SqlUsinaRepository(SessionLocal)

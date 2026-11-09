@@ -1,7 +1,3 @@
-"""
-Camada de Servico, AssinaturaService.
-"""
-
 from app.domain.assinatura import Assinatura, AssinaturaCreate
 from app.domain.usina import StatusUsina
 from app.repositories.assinatura_repository import AssinaturaRepository, assinatura_repository

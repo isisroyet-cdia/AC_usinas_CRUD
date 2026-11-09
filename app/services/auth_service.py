@@ -1,7 +1,3 @@
-"""
-Camada de Servico, AuthService: cadastro, login e validacao de token.
-"""
-
 import jwt
 
 from app.core.security import (
@@ -36,8 +32,6 @@ class AuthService:
 
     def autenticar(self, email: str, senha: str) -> Token:
         usuario = self._repository.buscar_por_email(email)
-        # Mesma mensagem para email inexistente e senha errada:
-        # assim a API nao revela quais emails estao cadastrados.
         if usuario is None or not verificar_senha(senha, usuario.senha_hash):
             raise ErroDeNegocio(
                 code="CREDENCIAIS_INVALIDAS",

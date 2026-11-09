@@ -1,8 +1,3 @@
-"""
-Testes de integracao dos repositorios SQL.
-Usam o banco de teste de verdade, preparado pela fixture banco_limpo.
-"""
-
 from app.db.database import SessionLocal
 from app.domain.usina import StatusUsina, UsinaCreate, UsinaUpdate
 from app.repositories.usina_repository import SqlUsinaRepository
@@ -21,8 +16,6 @@ def test_criar_grava_e_o_banco_gera_o_id():
 
 
 def test_dado_persiste_entre_instancias_do_repositorio():
-    # Duas instancias diferentes enxergam o mesmo dado: ele esta no banco,
-    # nao na memoria do objeto.
     SqlUsinaRepository(SessionLocal).criar(nova_usina())
     outra_instancia = SqlUsinaRepository(SessionLocal)
     assert len(outra_instancia.listar()) == 1

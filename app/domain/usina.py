@@ -1,6 +1,3 @@
-"""
-Camada de Domínio, entidade Usina.
-"""
 from datetime import date
 from enum import Enum
 
@@ -26,14 +23,10 @@ class UsinaBase(BaseModel):
 
 
 class UsinaCreate(UsinaBase):
-    """Campos exigidos para criar uma usina (POST)."""
-
     pass
 
 
 class UsinaUpdate(BaseModel):
-    """Campos que podem ser atualizados (PUT). Todos opcionais."""
-
     nome: str | None = Field(None, min_length=3, max_length=100)
     localizacao: str | None = Field(None, min_length=3, max_length=100)
     capacidade_geracao_kwh: float | None = Field(None, gt=0)
@@ -41,8 +34,6 @@ class UsinaUpdate(BaseModel):
 
 
 class Usina(UsinaBase):
-    """Representacao completa de uma usina, como a API devolve."""
-
     id: int
     data_ativacao: date
 

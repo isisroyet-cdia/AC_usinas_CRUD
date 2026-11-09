@@ -1,7 +1,3 @@
-"""
-Testes unitarios das funcoes de seguranca (hash e JWT).
-"""
-
 from datetime import timedelta
 
 import jwt
@@ -18,7 +14,7 @@ from app.core.security import (
 def test_hash_nao_guarda_a_senha_original():
     senha_hash = gerar_hash_senha("solar12345")
     assert senha_hash != "solar12345"
-    assert senha_hash.startswith("$2")  # prefixo do bcrypt
+    assert senha_hash.startswith("$2")
 
 
 def test_verificar_senha_correta_e_incorreta():
@@ -28,7 +24,6 @@ def test_verificar_senha_correta_e_incorreta():
 
 
 def test_mesma_senha_gera_hashes_diferentes():
-    # O salt aleatorio impede que duas senhas iguais tenham o mesmo hash.
     assert gerar_hash_senha("solar12345") != gerar_hash_senha("solar12345")
 
 
