@@ -1,0 +1,28 @@
+@startuml POST /v1/usinas com token
+actor Cliente
+participant "UsinaController" as Controller
+participant "obter_usuario_atual" as Dependencia
+participant "AuthService" as Auth
+participant "UsinaService" as Service
+participant "UsinaRepository" as Repository
+
+Cliente -> Controller: POST /v1/usinas\nAuthorization: Bearer token\n(UsinaCreate)
+Controller -> Dependencia: Depends(obter_usuario_atual)
+Dependencia -> Auth: usuario_do_token(token)
+Auth -> Auth: decodificar_token(token)
+alt token ausente, invalido ou expirado
+    Auth --> Dependencia: ErroDeNegocio TOKEN_INVALIDO
+    Dependencia --> Controller: 401
+    Controller --> Cliente: 401 TOKEN_INVALIDO
+else token valido
+    Auth --> Dependencia: Usuario
+    Dependencia --> Controller: Usuario
+    Controller -> Controller: Validacao Pydantic (UsinaCreate)
+    Controller -> Service: criar(dados)
+    Service -> Repository: criar(dados)
+    Repository -> Repository: gera id e data_ativacao
+    Repository --> Service: Usina
+    Service --> Controller: Usina
+    Controller --> Cliente: 201 Created (Usina)
+end
+@enduml

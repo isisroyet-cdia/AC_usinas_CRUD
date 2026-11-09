@@ -1,24 +1,26 @@
-"""
-Ponto de entrada da aplicacao.
-"""
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
+from app.controllers.assinatura_controller import router as assinatura_router
+from app.controllers.auth_controller import router as auth_router
 from app.controllers.usina_controller import router as usina_router
 from app.services.usina_service import ErroDeNegocio
 
 app = FastAPI(
     title="Bulbe Energia, API de Usinas",
-    description="Handson de CRUD em FastAPI, arquitetura em camadas (Aula 09).",
-    version="1.0.0",
+    description="Handson de CRUD em FastAPI com autenticacao JWT e testes.",
+    version="1.1.0",
 )
 
+app.include_router(auth_router)
 app.include_router(usina_router)
+app.include_router(assinatura_router)
 
 
 @app.exception_handler(ErroDeNegocio)
 def tratar_erro_de_negocio(request: Request, exc: ErroDeNegocio) -> JSONResponse:
+    headers = {"WWW-Authenticate": "Bearer"} if exc.status == 401 else None
     return JSONResponse(
         status_code=exc.status,
         content={
@@ -28,6 +30,7 @@ def tratar_erro_de_negocio(request: Request, exc: ErroDeNegocio) -> JSONResponse
                 "status": exc.status,
             }
         },
+        headers=headers,
     )
 
 
