@@ -1,7 +1,12 @@
+# Python
 .venv/
+venv/
 __pycache__/
 *.py[cod]
 .DS_Store
 .coverage
 htmlcov/
 .pytest_cache/
+
+# Bancos SQLite locais (cada um gera o seu com "alembic upgrade head")
+*.db

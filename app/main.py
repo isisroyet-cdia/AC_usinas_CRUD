@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
+from app.controllers.assinatura_controller import router as assinatura_router
 from app.controllers.auth_controller import router as auth_router
 from app.controllers.usina_controller import router as usina_router
 from app.services.usina_service import ErroDeNegocio
@@ -18,6 +19,7 @@ app = FastAPI(
 
 app.include_router(auth_router)
 app.include_router(usina_router)
+app.include_router(assinatura_router)
 
 
 @app.exception_handler(ErroDeNegocio)

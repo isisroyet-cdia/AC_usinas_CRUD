@@ -1,0 +1,35 @@
+@startuml
+hide circle
+skinparam linetype ortho
+
+entity "usinas" as usinas {
+  * id : INTEGER <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * localizacao : VARCHAR(100)
+  * capacidade_geracao_kwh : FLOAT
+  * status : VARCHAR(20)
+  * data_ativacao : DATE
+  potencia_instalada_kwp : FLOAT <<nullable>>
+}
+
+entity "usuarios" as usuarios {
+  * id : INTEGER <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * email : VARCHAR(120) <<unique>>
+  * senha_hash : VARCHAR(100)
+  * perfil : VARCHAR(20)
+}
+
+entity "assinaturas" as assinaturas {
+  * id : INTEGER <<PK>>
+  --
+  * assinante_nome : VARCHAR(100)
+  * kwh_contratados : FLOAT
+  * desconto_percentual : FLOAT
+  * usina_id : INTEGER <<FK>>
+}
+
+usinas ||--o{ assinaturas : "usina_id"
+@enduml
